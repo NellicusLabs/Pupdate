@@ -1,0 +1,194 @@
+<div class="main-sel img-upld">
+    <div class="container">
+        <div class="row">
+			<div class="col-md-12">
+				<div class="tl-btn main-sel">
+					<a href="javascript:void(0)" onclick="javascript:window.history.back();" class="btn">GO BACK</a>
+				</div>
+			</div>
+            <div class="col-md-8 offset-md-2">
+				
+                    <div class="avatar-upload">
+                        <div class="avatar-preview">
+                           <div id="upload-demo" style="width:2px;height:2px;"></div>
+                            <?php if($row['pet_image']){?>
+                                <div id="imagePreview" style="background-image: url(uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>"></div>
+
+                                <?php }else{ ?>
+
+                                    <?php if($row['pet_species'] =='Dog'){?>
+
+                                        <div id="imagePreview" style="background-image: url(images/pet_icons/dog.svg"></div>
+
+                                        <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                            <div id="imagePreview" style="background-image: url(images/pet_icons/cat.svg"></div>
+
+                                            <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                                <div id="imagePreview" style="background-image: url(images/pet_icons/bird.svg"></div>
+
+                                                <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                                    <div id="imagePreview" style="background-image: url(images/pet_icons/fish.svg"></div>
+
+                                                    <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                        <div id="imagePreview" style="background-image: url(images/pet_icons/hamster.svg"></div>
+
+                                                        <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                            <div id="imagePreview" style="background-image: url(images/pet_icons/rabbit.svg"></div>
+
+                                                            <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                                <div id="imagePreview" style="background-image: url(images/pet_icons/snake.svg"></div>
+
+                                                                <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                                    <div id="imagePreview" style="background-image: url(images/pet_icons/turtle.svg"></div>
+                                                                    <?php } } ?>
+
+                        </div>
+                    </div>
+					
+                    <input type="hidden" id="pid" name="pid" value="<?=$row['pet_id'];?>" />
+              
+                <div class="porfil-btm-txt text-center">
+
+                    <p>
+                    	<h2><?=$row['pet_name'];?></h2>
+                        <?php $petage = date_diff(date_create(), date_create($row['pet_dob']));
+				echo $petage->format("%Y Years, %M Months, %d Days"); ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="main-sel tab-systm pt-30 pb-30">
+    <div class="container">
+        <div class="row">
+			<div class="main-sel time-box">
+				<div class="container">
+					<div class="row">
+
+					<?php $k = 1; while($res = $Result['Playtime']->fetch_assoc()){ if($k == 1){ ?>
+                    <div class="col-md-4 col-md-6 col-lg-4" >
+					                                                     
+                        <div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+                           <div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/toys.svg" alt="icon"/></div>
+                            
+                            <h5>Last <?=$res['event_type'];?><br>
+						<span><?php $playexplode = explode(' ',$res['event_time']); echo $playexplode[1].' '.$playexplode[2].' '.$playexplode[0];?></span></h5>
+                        </div>
+                    </div>
+                    <?php } $k++; } ?>    
+					<?php $k = 1; while($res = $Result['Meal']->fetch_assoc()){ if($k == 1){ ?>
+					<div class="col-md-4 col-md-6 col-lg-4">
+																	
+						<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+						   <div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/food.svg" alt="icon"/></div>
+						  
+							<h5>Last <?=$res['event_type'];?><br>
+							<span><?php $mealexplode = explode(' ',$res['event_time']); echo $mealexplode[1].' '.$mealexplode[2].' '.$mealexplode[0];?></span></h5>
+						</div>
+					</div>
+					<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Water']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">							  
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/water.svg" alt="icon"/></div>
+										<h5>Last <?=$res['event_type'];?><br>
+										<span><?php $waterexplode = explode(' ',$res['event_time']); echo $waterexplode[1].' '.$waterexplode[2].' '.$waterexplode[0];?></span></h5>
+									</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Treat']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/medal.svg" alt="icon"/></div>
+									<h5>Last <?=$res['event_type'];?><br>
+									<span><?php $treatexplode = explode(' ',$res['event_time']); echo $treatexplode[1].' '.$treatexplode[2].' '.$treatexplode[0];?></span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Pee']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">							  
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/grass.svg" alt="icon"/></div>
+									<h5>Last <?=$res['event_type'];?><br>
+									<span><?php $peeexplode = explode(' ',$res['event_time']); echo $peeexplode[1].' '.$peeexplode[2].' '.$peeexplode[0];?></span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Poo']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">							  
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/poop-1.svg" alt="icon"/></div>
+									<h5>Last <?=$res['event_type'];?><br>
+									<span><?php $pooexplode = explode(' ',$res['event_time']); echo $pooexplode[1].' '.$pooexplode[2].' '.$pooexplode[0];?></span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Bath']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">							   
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/shampoo.svg" alt="icon"/></div>
+									<h5>Last <?=$res['event_type'];?><br>
+									<span>
+									<?php $petage = date_diff(date_create(), date_create($res['event_time']));
+									echo $petage->format("%d Days Ago"); ?></span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Vet Visit']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">																				 
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/ambulance.svg" alt="icon"/></div>									
+									<h5>Last <?=$res['event_type'];?><br>
+									<span><?php// $vetexplode = explode(' ',$res['event_time']); echo $vetexplode[0];?>
+									<?php $vetexplode = explode(' ',$res['event_time']); echo $vetexplode[0];?>
+									</span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Weight']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">																				 
+								<div class="tme-txt main-sel">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/search.svg" alt="icon"/></div>									
+									<h5>Last <?=$res['event_type'];?><br>
+									<span><?php $weightexplode = explode(' ',$res['event_time']); echo $weightexplode[0];?> - <?=$res['event_data'];?> lbs</span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Vomit']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">																				 
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/poop-1.svg" alt="icon"/></div>								
+									<h5>Last <?=$res['event_type'];?><br>
+									<span><?php $vomitexplode = explode(' ',$res['event_time']); echo $vomitexplode[1].' '.$vomitexplode[2].' '.$vomitexplode[0];?>								
+									</span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+							<?php $k = 1; while($res = $Result['Poo-Diarrhea']->fetch_assoc()){ if($k == 1){ ?>
+							<div class="col-md-4 col-md-6 col-lg-4">
+								<div class="tme-txt main-sel tiles-type" data-value="<?=$res['event_type'];?>">
+									<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/medal.svg" alt="icon"/></div>
+									<h5>Last <?=$res['event_type'];?><br>
+									<span><?php $diaexplode = explode(' ',$res['event_time']); echo $diaexplode[1].' '.$diaexplode[2].' '.$diaexplode[0];?>
+									</span></h5>
+								</div>
+							</div>
+							<?php } $k++; } ?>
+
+					</div>
+        </div>
+    </div>	
+    </div>	
+    </div>	<br/>
+</div>	
+	

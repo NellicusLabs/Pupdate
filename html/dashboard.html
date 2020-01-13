@@ -1,0 +1,411 @@
+<div class="main-sel bgry prdct-sec pt-50 pb-50">
+	<div class="container">
+		<div class="row">  
+            <?php $Count = $Result['data']->num_rows;?>
+         	<?php if($Count == 0){ ?> 	
+			<div class="col-md-12">
+			<div class="error-template">
+                <h1>
+                    Oops!</h1>
+                <h2>
+                    No Pets Found</h2>
+                <div class="error-details">
+                    Please add a furry friend!
+                </div>
+                <div class="error-actions">
+                    <a href="#" class="btn" data-toggle="modal" data-target="#addPetModal">
+                        Add pet </a>
+                </div>
+            </div>
+            </div>
+			
+			<?php }else{ ?>
+           <?php 
+			$loop = 1;
+		    while($row = $Result['data']->fetch_assoc()) {
+			?>
+			<div class="col-md-3 col-md-6 col-lg-3">			
+				<div class="thumbnail text-center main-sel">
+				<div class="img-hegt main-sel">
+				<a href="profile.php?pid=<?=$row['pet_id'];?>">
+					
+					<?php if($row['pet_image']){?>
+						<img src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+					<?php }else{ ?>
+					
+					<?php if($row['pet_species'] =='Dog'){?>
+						
+						<img src="./images/pet_icons/dog.svg" alt="pet-img">
+						
+					<?php }else if($row['pet_species'] =='Cat'){ ?>
+					
+						<img src="./images/pet_icons/cat.svg" alt="pet-img">
+					
+					<?php }else if($row['pet_species'] =='Bird'){ ?>
+					
+						<img src="./images/pet_icons/bird.svg" alt="pet-img">
+					
+					<?php }else if($row['pet_species'] =='Fish'){ ?>
+					
+						<img src="./images/pet_icons/fish.svg" alt="pet-img">
+					
+					<?php }else if($row['pet_species'] =='Hamster'){ ?>
+					
+						<img src="./images/pet_icons/hamster.svg" alt="pet-img">
+					
+					<?php }else if($row['pet_species'] =='Rabbit'){ ?>
+					
+						<img src="./images/pet_icons/rabbit.svg" alt="pet-img">
+					
+					<?php }else if($row['pet_species'] =='Snake'){ ?>
+					
+						<img src="./images/pet_icons/snake.svg" alt="pet-img">
+					
+					<?php }else if($row['pet_species'] =='Turtle'){ ?>
+					
+						<img src="./images/pet_icons/turtle.svg" alt="pet-img">
+					
+					<?php } } ?>
+					
+					</div>
+					<div class="inertxt main-sel">
+					
+					<h4><?=$row['pet_name'];?></h4> 
+					
+					</div>
+				
+				</a>
+				<ul class="image-button">
+					<li><a class="event-button"  data-value="<?=$row['pet_id'];?>" href="javascript:void(0);" data-toggle="modal" data-target="#pupdatebutton<?=$loop;?>" title="Events Auto Buton"><i class="fa fa-list"></i></a></li>
+					<li><a class="event-form"  data-value="<?=$row['pet_id'];?>" href="javascript:void(0);" data-toggle="modal" data-target="#pupdateform<?=$loop;?>" title="Event Form"><i class="far fa-calendar-alt"></i></a></li>
+					<li><a class="event-recent" data-value="<?=$row['pet_id'];?>" href="javascript:void(0);" data-toggle="modal" data-target="#pupdaterecent<?=$loop;?>" title="5 Recent Events"><i class="fab fa-wpforms"></i></a></li>
+
+				</ul>
+				                          
+				</div>
+				
+			</div>
+			
+			<div class="modal fade add-pet-mdl" id="pupdatebutton<?=$loop;?>">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4><small>Log <?=$row['pet_name']? $row['pet_name'] : '-';?>'s Pupdate</small></h4>
+							<button type="button" class="close cl-nav" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body tab-systm">
+							<div class="account-wall">
+									<?php if($row['pet_image']){?>
+										<img class="profile-img"  src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+									<?php }else{ ?>
+
+									<?php if($row['pet_species'] =='Dog'){?>
+
+										<img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Cat'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Bird'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Fish'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Snake'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+									<?php } } ?>
+							
+									<div class="row input-container brdr-bx">
+										<ul class="nav nav-pills mb-3 main-sel" id="pills-tab" role="tablist">
+											<?php include('html/event-list-options.html'); // INCLUDE EVENT OPTIONS FILE... ?>
+								        </ul>
+										<div  class="col-md-12 response Loadernav"></div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>	
+			<!-- The Modal -->
+			<div class="modal fade add-pet-mdl" id="Modalweight<?=$loop;?>">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4>Log Weight</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="account-wall">
+								<?php if($row['pet_image']){?>
+									<img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+									<?php }else{ ?>
+
+										<?php if($row['pet_species'] =='Dog'){?>
+
+											<img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+											<?php }else if($row['pet_species'] =='Cat'){ ?>
+
+												<img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+												<?php }else if($row['pet_species'] =='Bird'){ ?>
+
+													<img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+													<?php }else if($row['pet_species'] =='Fish'){ ?>
+
+														<img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+														<?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+															<img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+															<?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+																<img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+																<?php }else if($row['pet_species'] =='Snake'){ ?>
+
+																	<img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+																	<?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+																		<img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+																		<?php } } ?>
+																			<form id="Myweight<?=$loop;?>" class="form-signin ">
+																				<div class="row input-container">
+																					<div class="col-md-12">
+																						<div class="styled-input wide">
+																							<input type="text" name="weight" class="weight" required />
+																							<label>Enter Weight (LBS)</label>
+																						</div>
+																					</div>
+
+																					<div class="col-md-12 response Loaderweight"></div>
+																					<div class="col-md-12">
+																						<div class="submit-btnr pt-20 pb-20">
+																							<input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+																							<input type="submit" class="btn" value="Submit">
+																							<input type="reset" class="btn" value="Reset">
+																						</div>
+																					</div>
+																				</div>
+
+																			</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="modal fade add-pet-mdl" id="pupdaterecent<?=$loop;?>">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4><small>Recent Pupdates</small></h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="account-wall">
+									<?php if($row['pet_image']){?>
+										<img class="profile-img"  src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+									<?php }else{ ?>
+
+									<?php if($row['pet_species'] =='Dog'){?>
+
+										<img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Cat'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Bird'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Fish'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Snake'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+									<?php } } ?>
+									<div class="row input-container tab-systm">
+										
+										<table class="table tbl-hed table-striped">
+											<thead>
+												<tr>
+													<th scope="col"></th>
+													<th scope="col">Type</th>
+													<th scope="col">Time</th>
+												</tr>
+											</thead>
+
+										</table>
+										<div class="tab-content main-sel" id="pills-tabContent">
+											<div class="tab-pane fade show active" id="playtime" role="tabpanel" aria-labelledby="playtime-tab">
+												<div class = "load_data" >
+											</div>
+											</div>
+										   
+											
+										</div>
+									</div>
+
+							
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade add-pet-mdl" id="pupdateform<?=$loop;?>">
+				<div class="modal-dialog modal-md">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4><strong>Submit</strong> <small>Event</small></h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="account-wall">
+									<?php if($row['pet_image']){?>
+										<img class="profile-img"  src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+									<?php }else{ ?>
+
+									<?php if($row['pet_species'] =='Dog'){?>
+
+										<img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Cat'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Bird'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Fish'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Snake'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+									<?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+										<img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+									<?php } } ?>
+								
+									<div class="row input-container">										
+										<form id="MYEvent<?=$row['pet_id'];?>" class="form-signin">
+											<div class="container">
+												<div class="row">
+													
+													<div class="col-md-12">
+
+														<div class="styled-input">
+															<select name="event_type" id="event_type" class="styled-input" required>
+																<?php include('html/event-list-dropdown.html'); // INCLUDE EVENT OPTIONS FILE... ?>
+															</select>
+														</div>
+													</div>
+
+													<div class="col-md-12">
+														<div class="styled-input">
+														
+															<input  type='text' name="event_time" id="datetimepicker<?=$loop;?>" placeholder="Event Time" required >
+
+														</div>
+													</div>
+													<div class="Loadee col-md-12 response"></div>
+													<div class="col-md-12">
+														<div class="submit-btnr pt-20 pb-20">
+														  <input type="hidden" name="pid" value="<?=$row['pet_id']?>"/>
+															<input type="submit" class="btn" value="Submit">
+															<input type="reset" class="btn" value="Reset">
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</form>
+									</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<?php $loop++;
+			} ?>
+			<?php 
+			} ?>
+		<input type="hidden" id="pid" value=""/>
+              
+		</div>	
+	</div>	
+</div>	

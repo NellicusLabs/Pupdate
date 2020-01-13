@@ -1,0 +1,1039 @@
+<div class="main-sel img-upld">
+    <div class="container">
+        <div class="row">
+			<div class="col-md-12">
+				<div class="tl-btn main-sel">
+					<a href="/tiles.php?pid=<?=$row['pet_id'];?>" class="btn">TILES</a>
+				</div>
+			</div>
+            <div class="col-md-8 offset-md-2">
+				
+                    <div class="avatar-upload">
+					
+                        <div class="avatar-edit">
+						    
+                            <input type='file' id="image" />
+                            <label for="image"></label>
+                        </div>
+                        <div class="avatar-preview">
+                           <div id="upload-demo" style="width:2px;height:2px;"></div>
+                            <?php if($row['pet_image']){?>
+                                <div id="imagePreview" style="background-image: url(uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>"></div>
+
+                                <?php }else{ ?>
+
+                                    <?php if($row['pet_species'] =='Dog'){?>
+
+                                        <div id="imagePreview" style="background-image: url(images/pet_icons/dog.svg"></div>
+
+                                        <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                            <div id="imagePreview" style="background-image: url(images/pet_icons/cat.svg"></div>
+
+                                            <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                                <div id="imagePreview" style="background-image: url(images/pet_icons/bird.svg"></div>
+
+                                                <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                                    <div id="imagePreview" style="background-image: url(images/pet_icons/fish.svg"></div>
+
+                                                    <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                        <div id="imagePreview" style="background-image: url(images/pet_icons/hamster.svg"></div>
+
+                                                        <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                            <div id="imagePreview" style="background-image: url(images/pet_icons/rabbit.svg"></div>
+
+                                                            <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                                <div id="imagePreview" style="background-image: url(images/pet_icons/snake.svg"></div>
+
+                                                                <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                                    <div id="imagePreview" style="background-image: url(images/pet_icons/turtle.svg"></div>
+                                                                    <?php } } ?>
+
+                        </div>
+                    </div>
+					
+                    <input type="hidden" id="pid" name="pid" value="<?=$row['pet_id'];?>" />
+              
+                <div class="porfil-btm-txt text-center">
+
+                    <p>
+                        <?php $petage = date_diff(date_create(), date_create($row['pet_dob']));
+				echo $petage->format("%Y Years, %M Months, %d Days"); ?>
+                    </p>
+                    <h2><?=$row['pet_name'];?> <br><span><?=$row['pet_species'];?></span></h2>
+                    <p>
+                        <?=$row['about_pet']? $row['about_pet'] :'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est cupiditate placeat obcaecati id incidunt, error officiis alias ea atque totam maiores ad sunt impedit aut saepe, facilis dolorem illum. Doloremque.';?>
+                    </p>
+                </div>
+                <div class="main-sel text-center penc-icon pb-20">
+                    <h4><a href="#" data-toggle="modal" data-target="#testModal4"><i class="fal fa-pen"></i></a></h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-sel prfile-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <!--Panel-->
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Profile</h3>
+
+                        <h4><a href="#" data-toggle="modal" data-target="#testModal1"><i class="fal fa-pen"></i></a></h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <p>Name:
+                            <?=$row['pet_name']? $row['pet_name'] : '-';?>
+                        </p>
+                        <p>Species:
+                            <?=$row['pet_species']? $row['pet_species'] : '-';?>
+                        </p>
+                        <p>Breed:
+                            <?=$row['pet_breed']? $row['pet_breed'] : '-';?>
+                        </p>
+                        <p>Sex:
+                            <?=$row['pet_sex']? $row['pet_sex'] : '-';?>
+                        </p>
+                        <p>Date of birth:
+                            <?=$row['pet_dob']? $row['pet_dob'] : '-';?>
+                        </p>
+                        <p>Color:
+                            <?=$row['pet_color']? $row['pet_color'] : '-';?>
+                        </p>
+                    </div>
+                </div>
+                <!--/.Panel-->
+                <!--Panel-->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Marking</h3>
+
+                        <h4><a href="#" data-toggle="modal" data-target="#testModal2"><i class="fal fa-pen"></i></a></h4>
+
+                    </div>
+
+                    <div class="card-body text-center">
+                        <?php $Sqlmark = $Result['mark']->fetch_assoc(); ?>
+                            <p>Microchip ID Number:
+                                <?=$Sqlmark['transponder_number']? $Sqlmark['transponder_number'] : '-';?>
+                            </p>
+                            <p>Date of application:
+                                <?=$Sqlmark['date_of_application']? $Sqlmark['date_of_application'] : '-';?>
+                            </p>
+                            <p>Location:
+                                <?=$Sqlmark['location']? $Sqlmark['location'] : '-';?>
+                            </p>
+
+                            <?php $i=1; while($Sqlresult = $Result['markfield']->fetch_assoc()){ ?>
+                                <div class="alert alert-success alert-dismissible fade show">
+                                    <h4><a class="close" data-toggle="modal" data-target="#ModalEditmark<?=$i;?>"><i class="fal fa-pen"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></h4>
+									<button data-value="<?=$Sqlresult['id'];?>" type="button" id="delete-markingField" class="close" data-dismiss="alert"><i class="fal fa-close"></i></button>
+                                    <p>
+                                        <?=$Sqlresult['marking_name'];?>:
+                                        <?=$Sqlresult['marking_data']? $Sqlresult['marking_data'] : '-';?>
+                                    </p>
+
+                                </div>
+
+                                <div class="modal fade add-pet-mdl" id="ModalEditmark<?=$i;?>">
+                                    <div class="modal-dialog modal-md">
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4> Edit Marking</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <div class="account-wall">
+
+                                                    <?php if($row['pet_image']){?>
+                                                        <img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+                                                        <?php }else{ ?>
+
+                                                            <?php if($row['pet_species'] =='Dog'){?>
+
+                                                                <img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+                                                                <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                                                    <img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+                                                                    <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                                                        <img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+                                                                        <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                                                            <img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+                                                                            <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                                                <img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+                                                                                <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                                                    <img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+                                                                                    <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                                                        <img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+                                                                                        <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                                                            <img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+                                                                                            <?php } } ?>
+                                                                                                <form id="EditMarking<?=$i;?>" class="form-signin">
+                                                                                                    <div class="row input-container">
+                                                                                                        <div class="col-md-12">
+                                                                                                            <div class="styled-input wide">
+                                                                                                                <input type="text" name="marking_name" value="<?=$Sqlresult['marking_name'];?>" required />
+                                                                                                                <label>Marking Name</label>
+                                                                                                            </div>
+                                                                                                        </div>
+
+                                                                                                        <div class="col-md-12">
+                                                                                                            <div class="styled-input">
+                                                                                                                <input type="text" name="marking_data" value="<?=$Sqlresult['marking_data'];?>" required />
+                                                                                                                <label>Marking Data</label>
+                                                                                                            </div>
+                                                                                                        </div>
+
+                                                                                                        <div class="LoaderEditmark col-md-12 response"></div>
+                                                                                                        <div class="col-md-12">
+                                                                                                            <input type="hidden" name="mid" value="<?=$Sqlresult['id']?>" />
+                                                                                                            <input type="submit" class="btn submit-btn" value="Edit" />
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                </form>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php $i++; } ?>
+
+                    </div>
+                    <div class="dlt-btn main-sel pb-10 text-center">
+                        <button type="button" class="btn" data-toggle="modal" data-target="#Modalmark"> Add Marking </button>
+                    </div>
+                </div>
+
+                <!--/.Panel-->
+                <!--Panel-->
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>Vaccinations</h3>
+
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="prfil-btn">
+
+                            <button type="submit" class="btn" data-toggle="modal" data-target="#testModal3"> New Vaccination </button>
+                            <?php while($Sqlresult = $Result['vacc']->fetch_assoc()){ ?>
+                                <div class="alert alert-success alert-dismissible fade show">
+                                   <button data-value="<?=$Sqlresult['id'];?>" type="button" id = "delete-vaccination" class="close " data-dismiss="alert"><i class="fal fa-close"></i></button>
+                                     <p>Type:
+                                        <?=$Sqlresult['type'];?>
+                                    </p>
+                                    <p>Date:
+                                        <?=$Sqlresult['date'];?>
+                                    </p>
+                                     <p>Valid until:
+                                        <?php if(!empty($Sqlresult['valid'])){ echo $Sqlresult['valid'];}else{ echo "Does Not Expire";}?>
+                                    </p>
+                                </div>
+
+                                <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <!--/.Panel-->
+                <div id="Loaderdelete" class="col-md-12"></div>
+                <div class="dlt-btn main-sel pt-20 pb-20 text-center">
+                    <button type="submit" id="<?=$row['pet_id'];?>" class="btn del-profile"> Delete Profile </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-sel tab-systm pt-30 pb-30">
+    <div class="container">
+        <div class="row">
+        	<div class="main-sel time-box">
+				<div class="container">
+					<div class="row">
+						<?php $k = 1; while($res = $Result['Playtime']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/toys.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php $playexplode = explode(' ',$res['event_time']); echo $playexplode[1].' '.$playexplode[2].' '.$playexplode[0];?></span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>    
+						<?php $k = 1; while($res = $Result['Meal']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/food.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php $mealexplode = explode(' ',$res['event_time']); echo $mealexplode[1].' '.$mealexplode[2].' '.$mealexplode[0];?></span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<?php $k = 1; while($res = $Result['Water']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/water.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php $waterexplode = explode(' ',$res['event_time']); echo $waterexplode[1].' '.$waterexplode[2].' '.$waterexplode[0];?></span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<?php $k = 1; while($res = $Result['Treat']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/medal.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php $treatexplode = explode(' ',$res['event_time']); echo $treatexplode[1].' '.$treatexplode[2].' '.$treatexplode[0];?></span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<?php $k = 1; while($res = $Result['Pee']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/grass.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php $peeexplode = explode(' ',$res['event_time']); echo $peeexplode[1].' '.$peeexplode[2].' '.$peeexplode[0];?></span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<?php $k = 1; while($res = $Result['Poo']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/poop-1.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php $pooexplode = explode(' ',$res['event_time']); echo $pooexplode[1].' '.$pooexplode[2].' '.$pooexplode[0];?></span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+
+						<?php $k = 1; while($res = $Result['Bath']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/shampoo.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span>
+								<?php $petage = date_diff(date_create(), date_create($res['event_time']));
+								echo $petage->format("%d Days Ago"); ?></span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<?php $k = 1; while($res = $Result['Vet Visit']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/ambulance.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php// $vetexplode = explode(' ',$res['event_time']); echo $vetexplode[0];?>
+								<?php $vetexplode = explode(' ',$res['event_time']); echo $vetexplode[0];?>
+								</span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<?php $k = 1; while($res = $Result['Weight']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/search.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span><?php $weightexplode = explode(' ',$res['event_time']); echo $weightexplode[0];?> - <?=$res['event_data'];?> lbs</span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<!--<?php $k = 1; while($res = $Result['Vomit']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/poop-1.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span>
+								<?php $vomitexplode = explode(' ',$res['event_time']); echo $vomitexplode[0];?>
+								</span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>
+						<?php $k = 1; while($res = $Result['Poo-Diarrhea']->fetch_assoc()){ if($k == 1){ ?>
+						<div class="col-md-4 col-md-6 col-lg-4">
+							<div class="tme-txt main-sel">
+								<div class="main-sel last-icon-image"><img class="last-icon" src="./images/pet_icons/medal.svg" alt="icon"/></div>
+								<h5>Last <?=$res['event_type'];?><br>
+								<span>
+								<?php $diaexplode = explode(' ',$res['event_time']); echo $diaexplode[0];?>
+								</span></h5>
+							</div>
+						</div>
+						<?php } $k++; } ?>-->
+
+
+					</div>
+        </div>
+    </div>
+            <div class="col-md-6">
+                <div class="brdr-bx main-sel">
+                    <div class="tabhed-txt main-sel">
+                        <h2><strong>Log <?=$row['pet_name']? $row['pet_name'] : '-';?>'s Pupdate</strong></h2>
+                    </div>
+                       <ul class="nav nav-pills mb-3 main-sel" id="pills-tab" role="tablist">
+                        <?php include('html/event-list-options.html'); // INCLUDE EVENT OPTIONS FILE... ?>
+                    </ul>
+                   <!-- <div class="dlt-btn main-sel pb-10 text-center">
+                        <button type="button" class="btn" > Weight </button>
+                    </div>-->
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="brdr-bx iner-tbl main-sel">
+                    <div class="tabhed-txt main-sel">
+                        <h2><strong>Recent Pupdates</strong></h2>
+                    </div>
+
+                    <table class="table tbl-hed table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+					<div id="test-list" class="main-sel">
+                    <div class="tab-content main-sel" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="playtime" role="tabpanel" aria-labelledby="playtime-tab">
+                            <div class = "load_data" >
+                               <!-- <tbody class="event-table">
+                                    <?php while($res = $Result['events']->fetch_assoc()){?>
+
+                                        <tr>
+                                            <th scope="row"><a id="<?=$res['id'];?>" class="del-event"><em class="fa fa-trash"></em></a></th>
+                                            <td>
+                                                <?=$res['event_type'];?>
+                                            </td>
+                                            <td>
+                                                <?php $timeexplode = explode(' ',$res['event_time']); echo $timeexplode[1].' '.$timeexplode[2].' '.$timeexplode[0];?>
+                                            </td>
+                                        </tr>
+                                        <?php }	?>
+                                </tbody>-->
+                            </div>
+                        </div>
+
+                    </div>
+					<ul class="pagination"></ul>
+                    </div>
+
+                </div>
+
+                <div class="main-sel add-pet-mdl brdr-evnt mt-20 mb-20">
+                    <form id="MYEvent1" class="form-signin">
+                        <div class="container">
+                            <div class="row">
+                                <div class="tabhed-txt main-sel">
+                                    <h2><strong>Submit</strong> <small>Event</small> </h2>
+                                </div>
+                                <div class="col-md-12">
+
+                                    <div class="styled-input">
+                                        <select name="event_type" id="event_type" class="styled-input" required>
+                                            <?php include('html/event-list-dropdown.html'); // INCLUDE EVENT OPTIONS FILE... ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="styled-input">
+
+                                        <input type='text' name="event_time" id="datetimepicker1" placeholder="Event Time" required>
+
+                                    </div>
+                                </div>
+                                <div id="Load1" class="col-md-12 response"></div>
+                                <div class="col-md-12">
+                                    <div class="submit-btnr pt-20 pb-20">
+                                        <input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+                                        <input type="submit" class="btn" value="Submit">
+                                        <input type="reset" class="btn" value="Reset">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade add-pet-mdl" id="testModal1">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4> Edit Profile</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="account-wall">
+
+                    <?php if($row['pet_image']){?>
+                        <img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+                        <?php }else{ ?>
+
+                            <?php if($row['pet_species'] =='Dog'){?>
+
+                                <img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+                                <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                    <img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+                                    <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                        <img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+                                        <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                            <img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+                                            <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                <img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+                                                <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                    <img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+                                                    <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                        <img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+                                                        <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                            <img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+                                                            <?php } } ?>
+                                                                <form id="EditPro" class="form-signin">
+                                                                    <div class="row input-container">
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input wide">
+                                                                                <input type="text" name="pet_name" value="<?=$row['pet_name'];?>" required />
+                                                                                <label>Name</label>
+                                                                            </div>
+                                                                        </div>
+                                                                   
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <input type="text" name="pet_breed" value="<?=$row['pet_breed'];?>" required />
+                                                                                <label>Breed</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+
+                                                                                <select name="pet_species" id="pet_species" class="styled-input" required>
+                                                                                    <option <?php if($row[ 'pet_species']=='' ){?> selected="selected"
+                                                                                        <?php }?> value="">Species</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Dog' ){?> selected="selected"
+                                                                                        <?php }?> value="Dog">Dog</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Cat' ){?> selected="selected"
+                                                                                        <?php }?> value="Cat">Cat</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Bird' ){?> selected="selected"
+                                                                                        <?php }?> value="Bird">Bird</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Fish' ){?> selected="selected"
+                                                                                        <?php }?> value="Fish">Fish</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Hamster' ){?> selected="selected"
+                                                                                        <?php }?> value="Hamster">Hamster</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Rabbit' ){?> selected="selected"
+                                                                                        <?php }?> value="Rabbit">Rabbit</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Snake' ){?> selected="selected"
+                                                                                        <?php }?> value="Snake">Snake</option>
+                                                                                    <option <?php if($row[ 'pet_species']=='Turtle' ){?> selected="selected"
+                                                                                        <?php }?> value="Turtle">Turtle</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <input type="text" name="pet_color" value="<?=$row['pet_color'];?>" required />
+                                                                                <label>color</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <input type="text" name="pet_dob" id="pet_dob" value="<?=$row['pet_dob'];?>" placeholder="Choose">
+                                                                                <label>Date Of Birth</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <select name="pet_sex" required>
+                                                                                    <option <?php if($row[ 'pet_sex']=='none' ){ ?> selected
+                                                                                        <?php }?> value="none" >Sex</option>
+                                                                                    <option <?php if($row[ 'pet_sex']=='Male' ){ ?> selected
+                                                                                        <?php }?> value="Male">Male</option>
+                                                                                    <option <?php if($row[ 'pet_sex']=='Female' ){ ?> selected
+                                                                                        <?php }?> value="Female">Female</option>
+
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div id="Loaderpro" class="col-md-12 response"></div>
+                                                                        <div class="col-md-12">
+                                                                            <input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+                                                                            <input type="submit" class="btn submit-btn" value="Edit" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade add-pet-mdl" id="testModal2">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4> Edit Marking</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="account-wall">
+
+                    <?php if($row['pet_image']){?>
+                        <img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+                        <?php }else{ ?>
+
+                            <?php if($row['pet_species'] =='Dog'){?>
+
+                                <img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+                                <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                    <img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+                                    <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                        <img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+                                        <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                            <img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+                                            <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                <img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+                                                <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                    <img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+                                                    <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                        <img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+                                                        <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                            <img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+                                                            <?php } } ?>
+                                                                <form id="EditMarking" class="form-signin">
+                                                                    <div class="row input-container">
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input wide">
+                                                                                <input type="text" name="transponder_number" value="<?=$row['transponder_number'];?>" required />
+                                                                                <label>Microchip ID Number</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <input type="text" name="date_of_application" id="date_of_application" value="<?=$row['date_of_application'];?>" placeholder="Choose">
+                                                                                <label>Date of application</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <input type="text" name="location" value="<?=$row['location'];?>" required />
+                                                                                <label>Location</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div id="Loadermark" class="col-md-12 response"></div>
+                                                                        <div class="col-md-12">
+                                                                            <input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+                                                                            <input type="submit" class="btn submit-btn" value="Edit" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade add-pet-mdl" id="Modalmark">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4> Add Marking</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="account-wall">
+
+                    <?php if($row['pet_image']){?>
+                        <img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+                        <?php }else{ ?>
+
+                            <?php if($row['pet_species'] =='Dog'){?>
+
+                                <img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+                                <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                    <img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+                                    <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                        <img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+                                        <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                            <img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+                                            <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                <img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+                                                <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                    <img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+                                                    <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                        <img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+                                                        <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                            <img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+                                                            <?php } } ?>
+                                                                <form id="AddMarking" class="form-signin">
+                                                                    <div class="row input-container">
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input wide">
+                                                                                <input type="text" name="marking_name" value="<?=$row['marking_name'];?>" required />
+                                                                                <label>Marking Name</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <input type="text" name="marking_data" value="<?=$row['marking_data'];?>" required />
+                                                                                <label>Marking Data</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div id="LoaderAddmark" class="col-md-12 response"></div>
+                                                                        <div class="col-md-12">
+                                                                            <input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+                                                                            <input type="submit" class="btn submit-btn" value="Add" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade add-pet-mdl" id="testModal3">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4>Add Vaccinations</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="account-wall">
+                    <?php if($row['pet_image']){?>
+                        <img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+                        <?php }else{ ?>
+
+                            <?php if($row['pet_species'] =='Dog'){?>
+
+                                <img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+                                <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                    <img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+                                    <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                        <img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+                                        <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                            <img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+                                            <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                <img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+                                                <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                    <img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+                                                    <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                        <img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+                                                        <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                            <img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+                                                            <?php } } ?>
+                                                                <form id="Myvacc" class="form-signin">
+                                                                    <div class="row input-container">
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input wide">
+                                                                                <input type="text" name="type" required />
+                                                                                <label>Type</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input">
+                                                                                <input type="text" name="date" id="datevacc" required>
+                                                                                <label>Date Administered</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input wide">
+                                                                                <input type="text" name="valid" id="datevalid"  />
+                                                                                <label>Valid Until</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div id="Loadervacc" class="col-md-12 response"></div>
+                                                                        <div class="col-md-12">
+                                                                            <input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+                                                                            <input type="submit" class="btn submit-btn" value="Add" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade add-pet-mdl" id="testModal4">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4>Edit Description</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="account-wall">
+                    <?php if($row['pet_image']){?>
+                        <img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+                        <?php }else{ ?>
+
+                            <?php if($row['pet_species'] =='Dog'){?>
+
+                                <img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+                                <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                    <img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+                                    <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                        <img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+                                        <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                            <img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+                                            <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                <img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+                                                <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                    <img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+                                                    <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                        <img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+                                                        <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                            <img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+                                                            <?php } } ?>
+                                                                <form id="Mydesc" class="form-signin">
+                                                                    <div class="row input-container">
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input wide">
+                                                                                <textarea class="form-control" required name="about_pet" rows="3" placeholder="Message">
+                                                                                    <?=$row['about_pet']? $row['about_pet'] :'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est cupiditate placeat obcaecati id incidunt, error officiis alias ea atque totam maiores ad sunt impedit aut saepe, facilis dolorem illum. Doloremque.';?>
+                                                                                </textarea>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="Loaderdesc" class="col-md-12 response"></div>
+                                                                        <div class="col-md-12">
+                                                                            <input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+                                                                            <input type="submit" class="btn submit-btn" value="Update" />
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div class="modal fade add-pet-mdl" id="Modalweight">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4>Log Weight</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="account-wall">
+                    <?php if($row['pet_image']){?>
+                        <img class="profile-img" src="uploads/pets/<?=$row['pet_id'];?>/<?=$row['pet_image'];?>" alt="pet-img">
+                        <?php }else{ ?>
+
+                            <?php if($row['pet_species'] =='Dog'){?>
+
+                                <img class="profile-img" src="./images/pet_icons/dog.svg" alt="pet-img">
+
+                                <?php }else if($row['pet_species'] =='Cat'){ ?>
+
+                                    <img class="profile-img" src="./images/pet_icons/cat.svg" alt="pet-img">
+
+                                    <?php }else if($row['pet_species'] =='Bird'){ ?>
+
+                                        <img class="profile-img" src="./images/pet_icons/bird.svg" alt="pet-img">
+
+                                        <?php }else if($row['pet_species'] =='Fish'){ ?>
+
+                                            <img class="profile-img" src="./images/pet_icons/fish.svg" alt="pet-img">
+
+                                            <?php }else if($row['pet_species'] =='Hamster'){ ?>
+
+                                                <img class="profile-img" src="./images/pet_icons/hamster.svg" alt="pet-img">
+
+                                                <?php }else if($row['pet_species'] =='Rabbit'){ ?>
+
+                                                    <img class="profile-img" src="./images/pet_icons/rabbit.svg" alt="pet-img">
+
+                                                    <?php }else if($row['pet_species'] =='Snake'){ ?>
+
+                                                        <img class="profile-img" src="./images/pet_icons/snake.svg" alt="pet-img">
+
+                                                        <?php }else if($row['pet_species'] =='Turtle'){ ?>
+
+                                                            <img class="profile-img" src="./images/pet_icons/turtle.svg" alt="pet-img">
+
+                                                            <?php } } ?>
+                                                                  <form id="Myweight1" class="form-signin">
+                                                                    <div class="row input-container">
+                                                                        <div class="col-md-12">
+                                                                            <div class="styled-input wide">
+                                                                                <input type="text" name="weight" class="weight" required />
+                                                                                <label>Enter Weight (LBS)</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div  class="col-md-12 response Loaderweight"></div>
+                                                                        <div class="col-md-12">
+                                                                            <div class="submit-btnr pt-20 pb-20">
+                                                                                <input type="hidden" name="pid" value="<?=$row['pet_id']?>" />
+                                                                                <input type="submit" class="btn" value="Submit">
+                                                                                <input type="reset" class="btn" value="Reset">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
