@@ -4,6 +4,8 @@ Pupdate is a small php web application to manage pets. It was originally created
 
 Pupdate allows for multiple pets and has the ability to have a shortcut added on iOS and Android for quick and easy "pupdating"
 
+Demo: http://demo.pupdater.com/dashboard.php
+
 ## Installation
 
 Pupdate should work on any modern web server running php and mysql/mariadb. Place the files in the web directory of your choice, load the provided db schema and place database settings in /inc/config.php
